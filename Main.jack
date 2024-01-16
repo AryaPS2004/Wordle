@@ -1,0 +1,111 @@
+class Main {
+    function void main() {
+        var String secretWord;
+        var int attempts;
+        var String guessedWord;
+        var String feedback;
+        var int i;
+        var char guessedChar;
+        var boolean containsChar;
+        var int flag;
+
+        do Output.printString("Welcome to Wordle!");
+        do Output.println();
+        do Output.println();
+        do Output.printString("RULE: Enter a five lettered word which player has to guess. Player has got six attempts to guess. If guessedWord contains same letters in secretWord in the same place, '+' will be shown. If the guessedWord contains same letters as secretWord, '-' will be shown. If neither the letter nor place is right '*' will be shown. ");
+        do Output.println();
+        do Output.println();
+    
+        let secretWord = Keyboard.readLine("Enter a five lettered word: ");
+        let attempts = 6;
+        let flag = 0;
+
+        while (attempts > 0 & flag = 0) {
+            let guessedWord = Keyboard.readLine("Enter your guess: ");
+            
+
+            if (Main.equals(guessedWord, secretWord)) {
+                do Output.printString("Congratulations! You guessed the word correctly!");
+                let flag = 1;
+            } 
+
+            else {
+                let feedback = "*****";
+                let i = 0;
+                
+                while (i < String.length(guessedWord)) {
+                    
+                    let guessedChar = guessedWord.charAt(i);
+
+                    if (guessedChar = secretWord.charAt(i)) {
+                        do feedback.setCharAt(i, 43);
+                    } 
+
+                    else {
+                        
+                        let containsChar = Main.containsChar(secretWord, guessedChar);
+
+                        if (containsChar) {
+                            do feedback.setCharAt(i, 45);
+                        } else {
+                            do feedback.setCharAt(i, 42);
+                        }
+                    }
+
+                    let i = i + 1;
+                }
+
+                if (flag = 0) {
+                    do Output.printString("Feedback: ");
+                    do Output.printString(feedback);
+                    do Output.println();
+    
+                    let attempts = attempts - 1;
+    
+                    do Output.printString("Attempts remaining: ");
+                    do Output.printInt(attempts);
+                    do Output.println();
+                }
+            }
+        }
+
+        do Output.printString("Game over! You ran out of attempts.");
+        do Output.printString("The secret word was: ");
+        do Output.printString(secretWord);
+        return;
+    }
+
+
+    function boolean containsChar(String s, char c) {
+        var int i;
+        let i = 0;
+        while (i < 5) {
+            if (s.charAt(i) = c) {
+               return true; 
+            }
+            let i = i + 1;
+        }
+
+        return false;
+    }
+
+    function boolean equals(String a, String b) {
+        var int aLength, bLength;
+        var int i;
+        let aLength = a.length();
+        let bLength = b.length();
+        // Do the lengths match?
+        if (~(aLength = bLength)) {
+          return false;
+        }
+        // Are all the chars the same?
+        let i = 0;
+        while (i < aLength) {
+          if (~(a.charAt(i) = b.charAt(i))) {
+            return false;
+          }
+          let i = i + 1;
+        }
+        return true;
+    }
+}
